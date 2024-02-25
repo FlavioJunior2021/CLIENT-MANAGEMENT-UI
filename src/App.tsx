@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "./components/ui/button";
-import { Plus } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 import { CreateClientForm } from "./components/create-client-form";
 import { CreateOrderForm } from "./components/create-order-form";
 import {
@@ -13,8 +13,12 @@ import {
 } from "./components/ui/table";
 import { useEffect, useState } from "react";
 import { api } from "./lib/api";
-import { useStore } from "@/context/ordersContext"
+import { useStore } from "@/context/ordersContext";
 import { OrdersActions } from "./components/drop-orders-actions";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Skeleton } from "./components/ui/skeleton";
 
 enum OrderStatusEnum {
 	pendente = "PENDING",
@@ -31,19 +35,39 @@ interface Order {
 	createdAt: string;
 }
 
+const statusSchema = z.object({
+	status: z.nativeEnum(OrderStatusEnum),
+});
+
+type StatusSchema = z.infer<typeof statusSchema>;
+
 type Orders = Order[];
 
 function App() {
-	const { orders } = useStore()
+	const { orders } = useStore();
 	const [stateOrders, setOrders] = useState<Orders>();
+	const [isLoading, setIsLoading] = useState(false);
+	const { register, handleSubmit, reset } = useForm<StatusSchema>({
+		resolver: zodResolver(statusSchema),
+	});
 
 	useEffect(() => {
 		async function getOrders() {
+			setIsLoading(true);
 			const response = await api.get("/orders");
 			setOrders(response.data);
+			setIsLoading(false);
 		}
 		getOrders();
 	}, [orders]);
+
+	async function getOrdersByStatus(data: StatusSchema) {
+		setIsLoading(true);
+		const response = await api.get(`/orders/status/${data.status}`);
+		setOrders(response.data);
+		reset();
+		setIsLoading(false);
+	}
 
 	function formatDate(formate: string) {
 		const date = new Date(formate);
@@ -107,6 +131,24 @@ function App() {
 						</Dialog.Portal>
 					</Dialog.Root>
 				</div>
+				<div className="flex items-center justify-between">
+					<form
+						className="flex items-center gap-2"
+						onSubmit={handleSubmit(getOrdersByStatus)}
+					>
+						<select
+							className="col-span-3 h-9 bg-zinc-800 text-zinc-50 border rounded pl-2 flex justify-center"
+							{...register("status")}
+						>
+							<option value="PENDING">Pendentes</option>
+							<option value="RESOLVED">Resolvidos</option>
+						</select>
+						<Button type="submit">
+							<Filter className="size-3" />
+							Filtrar
+						</Button>
+					</form>
+				</div>
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -123,26 +165,44 @@ function App() {
 							return (
 								<TableRow key={order.id}>
 									<TableCell>
-										{order.status == "PENDING" ? (
+										{isLoading ? (
+											<Skeleton className="bg-zinc-500 w-full h-2 rounded-sm" />
+										) : order.status == "PENDING" ? (
 											<span className="text-red-500">Pendente</span>
 										) : (
 											<span className="text-green-500">Resolvido</span>
 										)}
 									</TableCell>
 									<TableCell className="text-zinc-300">
-										{order.clientName}
+										{isLoading ? (
+											<Skeleton className="bg-zinc-500 w-full h-2 rounded-sm" />
+										) : (
+											order.clientName
+										)}
 									</TableCell>
 									<TableCell className="text-zinc-300">
-										{order.clientPhone}
+										{isLoading ? (
+											<Skeleton className="bg-zinc-500 w-full h-2 rounded-sm" />
+										) : (
+											order.clientPhone
+										)}
 									</TableCell>
 									<TableCell className="text-zinc-300">
-										{order.description}
+										{isLoading ? (
+											<Skeleton className="bg-zinc-500 w-full h-2 rounded-sm" />
+										) : (
+											order.description
+										)}
 									</TableCell>
 									<TableCell className="text-zinc-300">
-										{formatDate(order.createdAt)}
+										{isLoading ? (
+											<Skeleton className="bg-zinc-500 w-full h-2 rounded-sm" />
+										) : (
+											formatDate(order.createdAt)
+										)}
 									</TableCell>
 									<TableCell className="text-right">
-										<OrdersActions orderId={order.id} key={order.id}/>
+										<OrdersActions orderId={order.id} key={order.id} />
 									</TableCell>
 								</TableRow>
 							);

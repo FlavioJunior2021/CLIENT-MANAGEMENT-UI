@@ -78,7 +78,6 @@ export function CreateOrderForm() {
 			setIsLoading(false);
 		}
 	}
-
 	return (
 		<form className="w-full space-y-6" onSubmit={handleSubmit(submitOrder)}>
 			<div className="space-y-2">
