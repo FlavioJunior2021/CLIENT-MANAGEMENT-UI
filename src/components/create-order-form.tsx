@@ -8,6 +8,7 @@ import { api } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStore } from "@/context/ordersContext";
+import { Skeleton } from "./ui/skeleton";
 
 enum StatusEnum {
 	resolvido = "RESOLVED",
@@ -93,16 +94,20 @@ export function CreateOrderForm() {
 
 			<div className="space-y-2">
 				<span className="text-sm font-medium block">Cliente</span>
-				<select
-					className="col-span-3 h-9 bg-zinc-800 text-zinc-50 border rounded pl-2 flex justify-center"
-					{...register("clientId")}
-				>
-					{clients?.map((client) => (
-						<option value={client.id} key={client.id}>
-							{client.name}
-						</option>
-					))}
-				</select>
+				{clients.length <= 0 ? (
+					<Skeleton className="col-span-3 h-9 bg-zinc-800 text-zinc-50 border rounded pl-2 flex justify-center"/>
+				) : (
+					<select
+						className="col-span-3 h-9 bg-zinc-800 text-zinc-50 border rounded pl-2 flex justify-center"
+						{...register("clientId")}
+					>
+						{clients?.map((client) => (
+							<option value={client.id} key={client.id}>
+								{client.name}
+							</option>
+						))}
+					</select>
+				)}
 				{errors?.clientId && (
 					<p className="text-sm text-red-400">Selecione um cliente</p>
 				)}
