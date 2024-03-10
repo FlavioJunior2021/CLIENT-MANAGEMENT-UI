@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# Gerenciador de Clientes da Loja
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Sobre o Projeto
+Este projeto é um sistema de gerenciamento de clientes desenvolvido especificamente para a loja do meu pai. Ele permite um controle detalhado sobre os clientes e seus pedidos, otimizando a gestão do negócio.
 
-Currently, two official plugins are available:
+## Funcionalidades
+- **Cadastro de Clientes:** Interface intuitiva para adicionar novos clientes, com campos para nome, contato e histórico de compras.
+- **Registro de Pedidos:** Associação de pedidos aos clientes cadastrados, com detalhes sobre os produtos adquiridos e as datas das transações.
+- **Consulta de Pedidos:** Busca e visualização de informações completas dos pedidos e o respectivo cliente que o fez. Também é possível listar os pedidos resolvidos e pendentes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologias Utilizadas
+- **Front-end:** Desenvolvido com ReactJS, TypeScript e Vite, utilizando a biblioteca de componentes Shadcn UI para uma experiência de usuário moderna e responsiva.
+- **Back-end:** Construído com Node.js, utilizando o framework Fastify para um desempenho otimizado e o Prisma como ORM para interação com o banco de dados.
+- **Banco de Dados:** PostgreSQL, escolhido pela robustez e confiabilidade no gerenciamento de dados.
 
-## Expanding the ESLint configuration
+## Hospedagem
+O projeto está hospedado na plataforma Vercel, e pode ser acessado pelo link: https://client-management-ui.vercel.app/ .
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Contribuições
+Sua contribuição é muito bem-vinda! Se tiver sugestões de melhorias, sinta-se à vontade para abrir uma issue ou submeter um pull request.
 
-- Configure the top-level `parserOptions` property like this:
+## Contato
+Para dúvidas ou sugestões, entre em contato pelo flavinhoj78@gamail.com.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+---
