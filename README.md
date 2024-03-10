@@ -3,6 +3,8 @@
 ## Sobre o Projeto
 Este projeto é um sistema de gerenciamento de clientes desenvolvido especificamente para a loja do meu pai. Ele permite um controle detalhado sobre os clientes e seus pedidos, otimizando a gestão do negócio.
 
+[![Assista ao vídeo](https://i.stack.imgur.com/Vp2cE.png%29)](https://youtu.be/EoXPT4_okQY?si=80InPqjYFqGgZNI3)
+
 ## Funcionalidades
 - **Cadastro de Clientes:** Interface intuitiva para adicionar novos clientes, com campos para nome, contato e histórico de compras.
 - **Registro de Pedidos:** Associação de pedidos aos clientes cadastrados, com detalhes sobre os produtos adquiridos e as datas das transações.
